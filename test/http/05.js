@@ -1,4 +1,5 @@
 var http=require('http');
+var fs=require('fs');
 var server=http.createServer();
 
 server.on('request',function(res,resp){
@@ -7,9 +8,12 @@ server.on('request',function(res,resp){
     }else if(res.method=='POST'){
         console.log('POST请求方式')
     }
-    resp.setHeader('Content-Type', 'text/plain;charset=utf-8')
-    resp.write('你好,node')
-    resp.end();
+    resp.setHeader('Content-Type', 'text/html;charset=utf-8')
+    fs.readFile('./index01.html',function(err,data){
+        if (err) throw err;
+        console.log('读取文件成功');
+        resp.end(data);
+    })
 })
 
 server.listen(8080,function(){
